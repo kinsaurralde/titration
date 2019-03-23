@@ -1,24 +1,45 @@
-// main.cpp
-#include <aws/lambda-runtime/runtime.h>
 #include <iostream>
+#include <map>
 
-#define RUN_TYPE "LOCAL"  // AWS or LOCAL
+#include "include/rapidjson/document.h"
+#include "src/controller.h"
+#include "src/parse.h"
+#include "src/sample.h"
 
+#define RUN_TYPE 0  // Set to 1 for aws lambda version
+
+void run_titration(std::map<std::string, std::string> data) {
+    Controller control = Controller(data);
+    control.setup();
+    control.run();
+}
+
+#if RUN_TYPE    // Dont include aws lambda files and handler if testing locally
+#include <aws/lambda-runtime/runtime.h>
 using namespace aws::lambda_runtime;
 
-void run_titration(std::string data) {
-    std::cout << "Data: " << data << std::endl;
-}
-
 invocation_response my_handler(invocation_request const& request) {
-    run_titration("aws");
+    Parser json = Parser(request.payload.c_str());
+    run_titration(json.getData());
     return invocation_response::success(request.payload, "application/json");
 }
+#else
+#define my_handler 0
+void run_handler(int a) {}
+#endif
 
-void local_handler() { run_titration("testing"); }
+void local_handler(int num) {
+    const char* input = samples::test_1;
+    Parser json = Parser(input);
+    run_titration(json.getData());
+}
+
+void local_handler() {
+    local_handler(0);
+}
 
 int main() {
-    if (RUN_TYPE == "AWS") {
+    if (RUN_TYPE) {
         std::cout << "Running AWS Version" << std::endl;
         run_handler(my_handler);
     } else {
