@@ -9,8 +9,8 @@
 #define RUN_TYPE 0  // Set to 1 for aws lambda version
 
 void run_titration(std::map<std::string, std::string> data) {
-    Controller control = Controller(data);
-    control.setup();
+    Controller control = Controller(std::move(data));
+    control.setupReaction();
     control.run();
 }
 

@@ -102,7 +102,7 @@ gh_pages_push() {
 		abort "GitHub token invalid: found ${#GH_TOKEN} characters, expected 40."
 
 	cd "${TRAVIS_BUILD_DIR}/build/doc/html";
-	# setup credentials (hide in "set -x" mode)
+	# setupReaction credentials (hide in "set -x" mode)
 	git remote set-url --push origin "${GITHUB_URL}"
 	git config credential.helper 'store'
 	# ( set +x ; git config credential.username "${GH_TOKEN}" )
