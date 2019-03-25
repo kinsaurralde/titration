@@ -29,7 +29,7 @@ void run_handler(int a) {}
 #endif
 
 void local_handler(int num) {
-    const char* input = samples::test_1;
+    const char* input = sample[num];
     Parser json = Parser(input);
     run_titration(json.getData());
 }
