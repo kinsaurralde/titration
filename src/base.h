@@ -1,0 +1,4 @@
+#ifndef TITRATION_BASE_H
+#define TITRATION_BASE_H
+
+#endif //TITRATION_BASE_H

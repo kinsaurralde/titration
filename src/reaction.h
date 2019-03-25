@@ -2,7 +2,10 @@
 #define TITRATION_REACTION_H
 
 #include <iostream>
+#include <memory>
 #include <map>
+
+#include "component.h"
 
 class Reaction {
 public:
@@ -27,15 +30,12 @@ public:
 
 protected:
     std::map<std::string, std::string> input_data;
+    std::unique_ptr<Component> acid;
+    std::unique_ptr<Component> base;
+    double titrant_vol;
+    double titrant_conc;
+    bool titrant_is_acid;
     double pH;
-    double init_acid_conc;
-    double init_base_conc;
-    double init_acid_vol;
-    double init_base_vol;
-    double acid_conc;
-    double base_conc;
-    double acid_vol;
-    double base_vol;
 };
 
 #endif //TITRATION_REACTION_H

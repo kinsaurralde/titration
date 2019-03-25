@@ -25,8 +25,8 @@ double Reaction::getConcOH() {
 void Reaction::printCurrentData() {
     std::cout << "Current Data" << std::endl;
     std::cout << "pH: " << getPH() << std::endl;
-    std::cout << "Acid Concentration: " << acid_conc << std::endl;
-    std::cout << "Acid Volume: " << acid_vol << std::endl;
-    std::cout << "Base Concentration: " << base_conc << std::endl;
-    std::cout << "Base Volume: " << base_vol << std::endl;
+    std::cout << "Acid Concentration: " << acid->getConcentration() << std::endl;
+    std::cout << "Acid Volume: " << acid->getVolume() << std::endl;
+    std::cout << "Base Concentration: " << base->getConcentration() << std::endl;
+    std::cout << "Base Volume: " << base->getVolume() << std::endl;
 }
