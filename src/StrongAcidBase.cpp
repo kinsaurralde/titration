@@ -50,18 +50,12 @@ void StrongAcidBase::run() {
     std::cout << "Begining titration" << std::endl;
     std::cout << "Moles titrant added per cycle: " << mol_titrant_add_per_cycle << std::endl;
     std::cout << "Total moles titrant: " << titrant_mol << std::endl;
-    //std::cout << "[ " << i << " ] Moles titrant added: " << mol_titrant_added << " Volume titrant added: "
-    //          << vol_titrant_added << " Total Volume: " << total_volume << " ";
-    //printCurrentData();
     view->printCurrentStep(i, mol_titrant_added, vol_titrant_added);
     while (mol_titrant_added < titrant_mol) {
         i++;
         addTitrant(mol_titrant_add_per_cycle, vol_titrant_add_per_cycle);
         mol_titrant_added += mol_titrant_add_per_cycle;
         vol_titrant_added += vol_titrant_add_per_cycle;
-        //std::cout << "[ " << i << " ] Moles titrant added: " << mol_titrant_added << " Volume titrant added: "
-        //          << vol_titrant_added << " Total Volume: " << total_volume << " ";
-        //printCurrentData();
         view->printCurrentStep(i, mol_titrant_added, vol_titrant_added);
     }
 }
@@ -74,13 +68,12 @@ void StrongAcidBase::calculatePH() {
     } else if (acid_concentration > base_concentration) {
         pH = -log10(acid_concentration);
     } else {
-        pH = 14 - log10(base_concentration);
+        pH = 14 + log10(base_concentration);
     }
 }
 
 void StrongAcidBase::addTitrant(double moles_added, double volume_added) {
     total_volume += volume_added;
-    //std::cout << "Total Volume: " << total_volume << std::endl;
     if (titrant_is_acid) {
         acid->addMoles(base->removeMoles(moles_added, volume_added));
     } else {
