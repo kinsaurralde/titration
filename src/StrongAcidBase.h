@@ -11,6 +11,8 @@ public:
 
     void run() override;
 
+    void addTitrant(double moles_added, double volume_added) override;
+
     void calculatePH() override;
 
 protected:

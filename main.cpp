@@ -46,5 +46,6 @@ int main() {
         std::cout << "Running Local Testing Version" << std::endl;
         local_handler();
     }
+    std::cout << std::endl;
     return 0;
 }

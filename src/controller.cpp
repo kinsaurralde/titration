@@ -39,5 +39,5 @@ void Controller::setupReaction() {
 }
 
 void Controller::run() {
-    reaction->printCurrentData();
+    reaction->run();
 }
