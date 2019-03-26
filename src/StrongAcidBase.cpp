@@ -1,9 +1,10 @@
 #include "StrongAcidBase.h"
 #include <math.h>
+#include "view.h"
 
 
-StrongAcidBase::StrongAcidBase(std::map<std::string, std::string> input_data, int type) : Reaction(
-        std::move(input_data)), type(type) {
+StrongAcidBase::StrongAcidBase(std::map<std::string, std::string> input_data, int type, View *view) : Reaction(
+        std::move(input_data), view), type(type) {
     setup();
 }
 
@@ -49,17 +50,19 @@ void StrongAcidBase::run() {
     std::cout << "Begining titration" << std::endl;
     std::cout << "Moles titrant added per cycle: " << mol_titrant_add_per_cycle << std::endl;
     std::cout << "Total moles titrant: " << titrant_mol << std::endl;
-    std::cout << "[ " << i << " ] Moles titrant added: " << mol_titrant_added << " Volume titrant added: "
-              << vol_titrant_added << " Total Volume: " << total_volume << " ";
-    printCurrentData();
+    //std::cout << "[ " << i << " ] Moles titrant added: " << mol_titrant_added << " Volume titrant added: "
+    //          << vol_titrant_added << " Total Volume: " << total_volume << " ";
+    //printCurrentData();
+    view->printCurrentStep(i, mol_titrant_added, vol_titrant_added);
     while (mol_titrant_added < titrant_mol) {
         i++;
         addTitrant(mol_titrant_add_per_cycle, vol_titrant_add_per_cycle);
         mol_titrant_added += mol_titrant_add_per_cycle;
         vol_titrant_added += vol_titrant_add_per_cycle;
-        std::cout << "[ " << i << " ] Moles titrant added: " << mol_titrant_added << " Volume titrant added: "
-                  << vol_titrant_added << " Total Volume: " << total_volume << " ";
-        printCurrentData();
+        //std::cout << "[ " << i << " ] Moles titrant added: " << mol_titrant_added << " Volume titrant added: "
+        //          << vol_titrant_added << " Total Volume: " << total_volume << " ";
+        //printCurrentData();
+        view->printCurrentStep(i, mol_titrant_added, vol_titrant_added);
     }
 }
 

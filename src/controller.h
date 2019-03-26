@@ -5,6 +5,7 @@
 #include <map>
 #include <memory>
 #include "reaction.h"
+#include "view.h"
 
 enum titration_type {
     NONE = 0,
@@ -14,6 +15,10 @@ enum titration_type {
     SBWA = 4,
 };
 
+class View;
+
+class Reaction;
+
 class Controller {
    public:
     explicit Controller(std::map<std::string,std::string> input);
@@ -21,6 +26,8 @@ class Controller {
     void setupReaction();
 
     void run();
+
+    const std::unique_ptr<Reaction> &getReaction() const;
 
     bool error;
     std::string error_message;
@@ -30,6 +37,7 @@ class Controller {
     bool is_setup;
     titration_type type;
     std::unique_ptr<Reaction> reaction;
+    std::unique_ptr<View> view;
 };
 
 #endif  // CONTROLLER_H

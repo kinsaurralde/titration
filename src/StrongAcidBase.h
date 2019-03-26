@@ -5,7 +5,7 @@
 
 class StrongAcidBase : public Reaction {
 public:
-    StrongAcidBase(std::map<std::string, std::string> input_data, int type);
+    StrongAcidBase(std::map<std::string, std::string> input_data, int type, View *view);
 
     void setup() override;
 
