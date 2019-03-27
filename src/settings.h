@@ -2,6 +2,7 @@
 #define TITRATION_SETTINGS_H
 
 #include <iostream>
+#include "../include/rapidjson/document.h"
 
 class Settings {
 public:
@@ -17,8 +18,23 @@ public:
 
     void setStream(std::ostream &stream);
 
+    bool isAws_version() const;
+
+    void setAws_version(bool aws_version);
+
+    bool isPrint_to_csv() const;
+
+    void setPrint_to_csv(bool print_to_csv);
+
+    rapidjson::Document &getReturn_json();
+
+    void setReturn_json(const rapidjson::Document &return_json);
+
 protected:
+    rapidjson::Document return_json;
+    bool aws_version;
     bool print_to_stream;
+    bool print_to_csv;
     std::ostream &stream;
 };
 

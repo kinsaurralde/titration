@@ -2,6 +2,8 @@
 #include <map>
 
 #include "include/rapidjson/document.h"
+#include "include/rapidjson/stringbuffer.h"
+#include "include/rapidjson/writer.h"
 #include "src/controller.h"
 #include "src/parse.h"
 #include "src/settings.h"
@@ -21,9 +23,13 @@ using namespace aws::lambda_runtime;
 
 invocation_response my_handler(invocation_request const& request) {
     Settings settings;
+    settings.setAws_version(true);
     Parser json = Parser(request.payload.c_str());
     run_titration(json.getData(), settings);
-    return invocation_response::success(request.payload, "application/json");
+    rapidjson::StringBuffer buffer;
+    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+    settings.getReturn_json().Accept(writer);
+    return invocation_response::success(buffer.GetString(), "application/json");
 }
 #else
 #define my_handler 0

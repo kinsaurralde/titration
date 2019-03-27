@@ -3,7 +3,7 @@
 #include "parse.h"
 #include "sample.h"
 
-Parser::Parser(int argc, char *argv[], Settings& settings) {
+Parser::Parser(int argc, char *argv[], Settings &settings) {
     parseString(sample[0]);
     int i = 1;
     while (i < argc - 1) {
@@ -46,7 +46,6 @@ std::map<std::string, std::string> Parser::getData() {
     return data;
 }
 
-
 void Parser::parseString(const char *input) {
     rapidjson::Document json;
     json.Parse(input);
@@ -57,8 +56,8 @@ void Parser::parseString(const char *input) {
 }
 
 void Parser::parseFile(const char *path_to_file) {
-    std::ifstream infile { path_to_file };
-    std::string file_contents { std::istreambuf_iterator<char>(infile), std::istreambuf_iterator<char>() };
+    std::ifstream infile{path_to_file};
+    std::string file_contents{std::istreambuf_iterator<char>(infile), std::istreambuf_iterator<char>()};
     parseString(file_contents.c_str());
 }
 

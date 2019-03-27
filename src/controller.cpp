@@ -1,6 +1,7 @@
 #include "controller.h"
 #include "StrongAcidBase.h"
 #include "StandardView.h"
+#include "AWSView.h"
 #include "settings.h"
 
 Controller::Controller(std::map<std::string, std::string> input, Settings &settings)
@@ -24,7 +25,11 @@ Controller::Controller(std::map<std::string, std::string> input, Settings &setti
 }
 
 void Controller::applySettings() {
-    view = std::make_unique<StandardView>(*this, settings.getStream());
+    if (settings.isAws_version()) {
+        view = std::make_unique<AWSView>(*this, settings.getStream());
+    } else {
+        view = std::make_unique<StandardView>(*this, settings.getStream());
+    }
 }
 
 void Controller::setupReaction() {
@@ -50,7 +55,9 @@ void Controller::setupReaction() {
 void Controller::run() {
     reaction->run();
     reaction->getView()->printFile();
-    reaction->getView()->printCSV();
+    if (settings.isPrint_to_csv()) {
+        reaction->getView()->printCSV();
+    }
     if (settings.isPrint_to_stream()) {
         reaction->getView()->printScreen();
     }
@@ -58,4 +65,8 @@ void Controller::run() {
 
 const std::unique_ptr<Reaction> &Controller::getReaction() const {
     return reaction;
+}
+
+Settings &Controller::getSettings() const {
+    return settings;
 }

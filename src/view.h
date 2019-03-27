@@ -15,7 +15,7 @@ public:
 
     virtual void printScreen();
 
-    virtual void printFile();
+    virtual void printFile() = 0;
 
     virtual void printCSV();
 

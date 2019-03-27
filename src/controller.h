@@ -37,6 +37,10 @@ class Controller {
 
    protected:
     Settings& settings;
+public:
+    Settings &getSettings() const;
+
+protected:
     std::map<std::string, std::string> input_data;
     bool is_setup;
     titration_type type;
