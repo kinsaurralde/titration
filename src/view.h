@@ -11,9 +11,13 @@ public:
 
     virtual void printCurrentStep() = 0;
 
-    virtual void printCurrentStep(int i) = 0;
-
     virtual void printCurrentStep(int i, double moles_added, double volume_added) = 0;
+
+    virtual void printScreen();
+
+    virtual void printFile();
+
+    virtual void printCSV();
 
     virtual void print(std::string input) = 0;
 

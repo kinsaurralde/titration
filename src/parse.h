@@ -3,12 +3,13 @@
 
 #include <map>
 #include "../include/rapidjson/document.h"
+#include "settings.h"
 
 class Parser {
 public:
     explicit Parser(const char *input);
 
-    Parser(int argc, char* argv[]);
+    Parser(int argc, char *argv[], Settings& settings);
 
     void parseString(const char *input);
 

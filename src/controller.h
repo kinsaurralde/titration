@@ -6,6 +6,7 @@
 #include <memory>
 #include "reaction.h"
 #include "view.h"
+#include "settings.h"
 
 enum titration_type {
     NONE = 0,
@@ -21,7 +22,9 @@ class Reaction;
 
 class Controller {
    public:
-    explicit Controller(std::map<std::string,std::string> input);
+    explicit Controller(std::map<std::string, std::string> input, Settings &settings);
+
+    void applySettings();
 
     void setupReaction();
 
@@ -33,6 +36,7 @@ class Controller {
     std::string error_message;
 
    protected:
+    Settings& settings;
     std::map<std::string, std::string> input_data;
     bool is_setup;
     titration_type type;

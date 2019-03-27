@@ -1,8 +1,10 @@
 #include "controller.h"
 #include "StrongAcidBase.h"
 #include "StandardView.h"
+#include "settings.h"
 
-Controller::Controller(std::map<std::string, std::string> input) : is_setup(false) , error(false) , input_data(input){
+Controller::Controller(std::map<std::string, std::string> input, Settings &settings)
+        : is_setup(false) , error(false) , input_data(input) ,  settings(settings) {
     std::string type_name = input.at("type");
     if (type_name == "SASB") {
         type = SASB;
@@ -18,7 +20,11 @@ Controller::Controller(std::map<std::string, std::string> input) : is_setup(fals
         error_message = "Invalid type given";
     }
     std::cout << "Setting up titration of type " << type << std::endl;
-    view = std::make_unique<StandardView>(*this, std::cout);
+
+}
+
+void Controller::applySettings() {
+    view = std::make_unique<StandardView>(*this, settings.getStream());
 }
 
 void Controller::setupReaction() {
@@ -43,6 +49,11 @@ void Controller::setupReaction() {
 
 void Controller::run() {
     reaction->run();
+    reaction->getView()->printFile();
+    reaction->getView()->printCSV();
+    if (settings.isPrint_to_stream()) {
+        reaction->getView()->printScreen();
+    }
 }
 
 const std::unique_ptr<Reaction> &Controller::getReaction() const {

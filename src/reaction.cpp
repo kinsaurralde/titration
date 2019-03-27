@@ -42,3 +42,7 @@ const std::unique_ptr<Component> &Reaction::getBase() const {
 double Reaction::getTotal_volume() const {
     return total_volume;
 }
+
+View *Reaction::getView() const {
+    return view;
+}

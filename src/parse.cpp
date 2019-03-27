@@ -3,7 +3,7 @@
 #include "parse.h"
 #include "sample.h"
 
-Parser::Parser(int argc, char **argv) {
+Parser::Parser(int argc, char *argv[], Settings& settings) {
     parseString(sample[0]);
     int i = 1;
     while (i < argc - 1) {
@@ -24,6 +24,9 @@ Parser::Parser(int argc, char **argv) {
                 changeTitrandConc(argv[i + 1]);
             } else if (strcmp(argv[i], "-f") == 0) {
                 parseFile(argv[i + 1]);
+            } else if (strcmp(argv[i], "-b") == 0) {
+                settings.setPrint_to_stream(false);
+                i--;
             }
         } catch (const std::invalid_argument &e) {
             std::cout << "Invalid argument: " << argv[i] << " " << argv[i + 1] << "  |  what: " << e.what()

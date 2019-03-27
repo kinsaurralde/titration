@@ -33,6 +33,8 @@ public:
 
     void printCurrentData();
 
+    View *getView() const;
+
     const std::unique_ptr<Component> &getAcid() const;
 
     const std::unique_ptr<Component> &getBase() const;

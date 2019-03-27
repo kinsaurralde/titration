@@ -4,11 +4,13 @@
 #include "include/rapidjson/document.h"
 #include "src/controller.h"
 #include "src/parse.h"
+#include "src/settings.h"
 
 #define RUN_TYPE 0  // Set to 1 for aws lambda version
 
-void run_titration(std::map<std::string, std::string> data) {
-    Controller control = Controller(std::move(data));
+void run_titration(std::map<std::string, std::string> data, Settings &settings) {
+    Controller control = Controller(std::move(data), settings);
+    control.applySettings();
     control.setupReaction();
     control.run();
 }
@@ -18,8 +20,9 @@ void run_titration(std::map<std::string, std::string> data) {
 using namespace aws::lambda_runtime;
 
 invocation_response my_handler(invocation_request const& request) {
+    Settings settings;
     Parser json = Parser(request.payload.c_str());
-    run_titration(json.getData());
+    run_titration(json.getData(), settings);
     return invocation_response::success(request.payload, "application/json");
 }
 #else
@@ -28,9 +31,9 @@ void run_handler(int a) {}
 #endif
 
 void local_handler(int argc, char* argv[]) {
-    std::cout << "Number of Command line arguments: " << argc << std::endl << std::endl;
-    Parser json = Parser(argc, argv);
-    run_titration(json.getData());
+    Settings settings;
+    Parser json = Parser(argc, argv, settings);
+    run_titration(json.getData(), settings);
 }
 
 
