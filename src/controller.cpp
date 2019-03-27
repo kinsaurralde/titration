@@ -28,6 +28,7 @@ void Controller::setupReaction() {
                 reaction = std::make_unique<StrongAcidBase>(StrongAcidBase(input_data, type, view.get()));
                 break;
             case SBSA:
+                reaction = std::make_unique<StrongAcidBase>(StrongAcidBase(input_data, type, view.get()));
                 break;
             case SAWB:
                 break;

@@ -4,7 +4,6 @@
 #include "include/rapidjson/document.h"
 #include "src/controller.h"
 #include "src/parse.h"
-#include "src/sample.h"
 
 #define RUN_TYPE 0  // Set to 1 for aws lambda version
 
@@ -28,23 +27,20 @@ invocation_response my_handler(invocation_request const& request) {
 void run_handler(int a) {}
 #endif
 
-void local_handler(int num) {
-    const char* input = sample[num];
-    Parser json = Parser(input);
+void local_handler(int argc, char* argv[]) {
+    std::cout << "Number of Command line arguments: " << argc << std::endl << std::endl;
+    Parser json = Parser(argc, argv);
     run_titration(json.getData());
 }
 
-void local_handler() {
-    local_handler(0);
-}
 
-int main() {
+int main(int argc, char* argv[]) {
     if (RUN_TYPE) {
         std::cout << "Running AWS Version" << std::endl;
         run_handler(my_handler);
     } else {
         std::cout << "Running Local Testing Version" << std::endl;
-        local_handler();
+        local_handler(argc, argv);
     }
     std::cout << std::endl;
     return 0;

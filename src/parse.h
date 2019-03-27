@@ -2,13 +2,35 @@
 #define TITRATION_PARSE_H
 
 #include <map>
+#include "../include/rapidjson/document.h"
 
 class Parser {
-   public:
-    Parser(const char* input);
+public:
+    explicit Parser(const char *input);
+
+    Parser(int argc, char* argv[]);
+
+    void parseString(const char *input);
+
+    void parseFile(const char* path_to_file);
+
+    void changeNumCycles(std::string num);
+
+    void changeSample(std::string num);
+
+    void changeType(std::string type);
+
+    void changeTitrantVol(std::string num);
+
+    void changeTitrantConc(std::string num);
+
+    void changeTitrandVol(std::string num);
+
+    void changeTitrandConc(std::string num);
+
     std::map<std::string, std::string> getData();
 
-   protected:
+protected:
     std::map<std::string, std::string> data;
 };
 
