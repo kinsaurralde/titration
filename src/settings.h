@@ -2,6 +2,7 @@
 #define TITRATION_SETTINGS_H
 
 #include <iostream>
+#include <chrono>
 #include "../include/rapidjson/document.h"
 
 class Settings {
@@ -30,12 +31,15 @@ public:
 
     void setReturn_json(const rapidjson::Document &return_json);
 
+    double getExecuteTime();
+
 protected:
     rapidjson::Document return_json;
     bool aws_version;
     bool print_to_stream;
     bool print_to_csv;
     std::ostream &stream;
+    std::chrono::_V2::system_clock::time_point time_start;
 };
 
 #endif //TITRATION_SETTINGS_H

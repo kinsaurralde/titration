@@ -1,7 +1,7 @@
 #include "settings.h"
 
-Settings::Settings() : print_to_stream(true) , stream(std::cout) , aws_version(false) , print_to_csv(true) {
-
+Settings::Settings() : print_to_stream(true), stream(std::cout), aws_version(false), print_to_csv(true) {
+    time_start = std::chrono::high_resolution_clock::now();
 }
 
 bool Settings::isPrint_to_stream() const {
@@ -44,3 +44,7 @@ rapidjson::Document &Settings::getReturn_json() {
     return return_json;
 }
 
+double Settings::getExecuteTime() {
+    auto time_now = std::chrono::high_resolution_clock::now();
+    return std::chrono::duration_cast<std::chrono::milliseconds>(time_now - time_start).count();
+}

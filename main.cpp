@@ -40,6 +40,7 @@ void local_handler(int argc, char* argv[]) {
     Settings settings;
     Parser json = Parser(argc, argv, settings);
     run_titration(json.getData(), settings);
+    std::cout << "Runtume: " << settings.getExecuteTime() << "ms" << std::endl;
 }
 
 
@@ -51,6 +52,5 @@ int main(int argc, char* argv[]) {
         std::cout << "Running Local Testing Version" << std::endl;
         local_handler(argc, argv);
     }
-    std::cout << std::endl;
     return 0;
 }

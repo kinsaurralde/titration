@@ -45,6 +45,7 @@ void AWSView::print(int input) {
 }
 
 void AWSView::printFile() {
+    return_json.AddMember("calc_time", controller.getSettings().getExecuteTime(), allocator);
     rapidjson::Value values(rapidjson::kArrayType);
     for (auto& itr : data) {
         rapidjson::Value current_value;
